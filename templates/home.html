@@ -16,13 +16,24 @@
             <small>Created: {{p.created_at|date:' M d Y at H:m'}}</small>
         </div>
         <div>
-            {% if user == p.author %}
+            {% if user == p.author or perms.main.delete_post %}
                 <form method="post">
                     {% csrf_token %}
 
                     <button type="submit" value="{{p.id}}" name='post-id' class="btn btn-danger">DELETE</button>
 
                 </form>
+            {% endif %}
+            <br>
+            {% if user.is_staff %}
+
+            <form method="post">
+                {% csrf_token %}
+
+                <button type="submit" value="{{p.author.id}}" name='user-id' class="btn btn-danger">BAN USER</button>
+
+            </form>
+
             {% endif %}
         </div>
     </div>
