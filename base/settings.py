@@ -49,7 +49,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -101,5 +100,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 #endregion STATIC & MEDIA FILES
 
+#region LOGIN & LOGOUT REDIRECTS
+LOGIN_URL = '/login'
 LOGIN_REDIRECT_URL = '/home'
 LOGOUT_REDIRECT_URL = '/login'
+#endregion LOGIN & LOGOUT REDIRECTS

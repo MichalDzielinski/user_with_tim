@@ -1,10 +1,21 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .forms import RegisterForm
+from .forms import RegisterForm, PostForm
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
+from .models import Post
 
+@login_required
 def home(request):
-    return render(request, 'home.html')
+    posts = Post.objects.all()
+
+    if request.method == 'POST':
+        post_id = request.POST.get('post-id')
+        post = Post.objects.filter(id=post_id).first()
+        if post and post.author == request.user:
+            post.delete()
+
+    return render(request, 'home.html', {'posts': posts})
 
 def sign_up(request):
     if request.method == "POST":
@@ -17,3 +28,24 @@ def sign_up(request):
         form = RegisterForm()
 
     return render(request, 'registration/sign-up.html', {'form': form})
+
+@login_required
+def create_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit = False)
+            post.author = request.user
+            post.save()
+            return redirect('/home')
+    else:
+        form = PostForm()
+
+    return render(request, 'create-post.html', {'form': form})
+
+
+
+
+
+
+
