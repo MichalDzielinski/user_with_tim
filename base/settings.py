@@ -17,18 +17,21 @@ ALLOWED_HOSTS = []
 #endregion BASIC SETTINGS & DEPLOYMENT
 
 INSTALLED_APPS = [
-    'jazzmin',
+    
     'admin_tools_stats',  
     'django_nvd3',
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    #third party apps
     'crispy_forms',
     "crispy_bootstrap5",
+    #custom apps
+    'app',
 ]
 
 #region CRISPY_FORMS_SETTINGS
@@ -98,3 +101,5 @@ USE_TZ = True
 STATIC_URL = 'static/'
 #endregion STATIC & MEDIA FILES
 
+LOGIN_REDIRECT_URL = '/home'
+LOGOUT_REDIRECT_URL = '/login'
